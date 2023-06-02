@@ -87,6 +87,14 @@
     </section>
   </main>
 
+  <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
+  <script>
+    window.TrackJS && TrackJS.install({ 
+      token: "7d1376e14219473ca0207fd82ec7d929"
+      // for more configuration options, see https://docs.trackjs.com
+    });
+  </script>
+                        
   <script>
     let form = document.querySelector('form');
     form.addEventListener('submit', e => {
@@ -96,12 +104,126 @@
       let secondNum = document.querySelector('#second-num').value;
       let operator = document.querySelector('#operator').value;
       output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
-    });
+    }); 
 
     let errorBtns = Array.from(document.querySelectorAll('#error-btns > button'));
 
     // Start your code here
     // You may move this JS to another file if you wish
+
+    document.querySelector('#error-btns > button:nth-child(1)').addEventListener('click', () => {
+      console.log('Log');
+    });
+
+    document.querySelector('#error-btns > button:nth-child(2)').addEventListener('click', () => {
+      console.error('Error');
+    });
+
+    document.querySelector('#error-btns > button:nth-child(3)').addEventListener('click', () => {
+      console.count('Count');
+    });
+
+    document.querySelector('#error-btns > button:nth-child(4)').addEventListener('click', () => {
+      console.warn('Warning');
+    });
+
+    document.querySelector('#error-btns > button:nth-child(5)').addEventListener('click', () => {
+      // const errorMsg = "The number does not equal 2"
+      // const number = 1;
+      // console.assert(number == 2, {number, errorMsg});
+
+      try {
+        const errorMsg = "The number does not equal 2";
+        const number = 1;
+        console.assert(number == 2, { number, errorMsg });
+      } 
+      catch (error) {
+        throw new Error(errorMsg);
+      } 
+      finally {
+        console.log('Assertion complete');
+      }
+    });
+
+    class ClearError extends Error {
+      constructor(message) {
+        super(message);
+        this.name = 'ClearError';
+      }
+    }
+
+    document.querySelector('#error-btns > button:nth-child(6)').addEventListener('click', () => {
+      try {
+        console.clear();
+      } 
+      catch (error) {
+        if (error instanceof ClearError) {
+          console.log('Custom error occurred:', error.message);
+        } else {
+          console.error('An error occurred:', error);
+        }
+      }
+    });
+
+    document.querySelector('#error-btns > button:nth-child(7)').addEventListener('click', () => {
+      console.dir(document.querySelector('#error-btns > button:nth-child(7)'));
+    });
+
+    document.querySelector('#error-btns > button:nth-child(8)').addEventListener('click', () => {
+      console.dirxml(document.querySelector('#error-btns > button:nth-child(8)'));
+    });
+
+    document.querySelector('#error-btns > button:nth-child(9)').addEventListener('click', () => {
+        console.group();
+    });
+
+    document.querySelector('#error-btns > button:nth-child(10)').addEventListener('click', () => {
+      console.groupEnd();
+    });
+
+    document.querySelector('#error-btns > button:nth-child(11)').addEventListener('click', () => {
+      function cseClass(name, num) {
+        this.name = name;
+        this.num = num;
+      }
+
+      const cse110 = new cseClass("Software Engineering", 110);
+      const cse100 = new cseClass("Advanced Data Structures and Algorthms", 100);
+      const cse11 = new cseClass("Intro to Programming", 11);
+
+      console.table([cse110, cse100, cse11]);
+    });
+
+    document.querySelector('#error-btns > button:nth-child(12)').addEventListener('click', () => {
+      console.time('Timer Button');
+    });
+
+    document.querySelector('#error-btns > button:nth-child(13)').addEventListener('click', () => {
+      console.timeEnd('Timer Button');
+    });
+
+    document.querySelector('#error-btns > button:nth-child(14)').addEventListener('click', function handleBtnClick() {
+      function deep() {
+        function deeper() {
+          function deepest() {
+            console.trace();
+          };
+          deepest();
+        };
+        deeper();
+      };
+      deep();
+    });
+
+    document.querySelector('#error-btns > button:nth-child(15)').addEventListener('click', function handleBtnClick() {
+      try {
+        boom();
+      }
+      catch(error) {
+        console.log('error!');
+        boom();
+      }
+    });
   </script>
 </body>
 
